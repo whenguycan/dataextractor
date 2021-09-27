@@ -15,17 +15,34 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 数据库表抽取工具
  * @author wangcy
  * @date 2021/9/25 8:45
  */
 public class Extractor {
 
+    String sql;
     String table;
     String[] columns;
     String filepath;
     List<Converter> converters = new ArrayList<>();
 
     public Extractor(String table, String... columns) {
+        this(table, table, columns, null);
+    }
+
+    public Extractor(String table, String[] columns, String where) {
+        this(table, table, columns, where);
+    }
+
+    public Extractor(String sourceTable, String targetTable, String[] columns, String where) {
+        this.sql = SqlBuilder.select(sourceTable, columns, where);
+        this.table = targetTable;
+        this.columns = columns;
+    }
+
+    public Extractor(String sql, String table, String[] columns) {
+        this.sql = sql;
         this.table = table;
         this.columns = columns;
     }
@@ -41,12 +58,6 @@ public class Extractor {
     }
 
     void check() {
-        if(StringUtils.isEmpty(table)) {
-            throw new RuntimeException("-->table is empty");
-        }
-        if(StringUtils.isAnyEmpty(columns)) {
-            throw new RuntimeException("-->columns has empty value");
-        }
         if(StringUtils.isEmpty(filepath)) {
             filepath = new File(System.getProperty("user.dir"), "sql_extract_" + System.currentTimeMillis() + ".txt").getPath();
         }
@@ -59,7 +70,6 @@ public class Extractor {
         try {
             String charset = "UTF-8";
             JdbcTemplate jdbcTemplate = JdbcUtils.getJdbcTemplate();
-            String sql = SqlBuilder.select(table, columns, null);
             List<Map<String, Object>> list = jdbcTemplate.queryForList(sql);
             File file = new File(filepath);
             if(!file.getParentFile().exists()) {

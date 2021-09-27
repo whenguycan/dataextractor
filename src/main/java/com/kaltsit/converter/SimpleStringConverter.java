@@ -6,18 +6,18 @@ package com.kaltsit.converter;
  */
 public class SimpleStringConverter implements Converter {
 
-    String[] template;
+    String[] templates;
 
-    public SimpleStringConverter(String... template) {
-        this.template = template;
+    public SimpleStringConverter(String... templates) {
+        this.templates = templates;
     }
 
     public boolean access(String column) {
-        if(template == null || template.length == 0) {
+        if(templates == null || templates.length == 0) {
             return false;
         }
         boolean find = false;
-        for(String s : template) {
+        for(String s : templates) {
             if(s != null && s.equals(column)) {
                 find = true;
                 break;
