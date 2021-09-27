@@ -1,6 +1,7 @@
 
 .git/
 .idea/
-src/main/test/
+src/test/
 target/
 *.iml
+*.txt
