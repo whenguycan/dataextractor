@@ -1,7 +1,6 @@
 package com.kaltsit.application;
 
 import com.kaltsit.converter.Converter;
-import com.kaltsit.converter.SimpleStringConverter;
 import com.kaltsit.util.JdbcUtils;
 import com.kaltsit.util.SqlBuilder;
 import com.kaltsit.util.StringUtils;
