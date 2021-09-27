@@ -48,7 +48,7 @@ public class Extractor {
             throw new RuntimeException("-->columns has empty value");
         }
         if(StringUtils.isEmpty(filepath)) {
-            throw new RuntimeException("-->filepath is empty");
+            filepath = new File(System.getProperty("user.dir"), "sql_extract_" + System.currentTimeMillis() + ".txt").getPath();
         }
     }
 
